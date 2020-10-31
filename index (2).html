@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AirQualityIndex</title>
+    <style>
+        body {
+            height: 400px;
+            width: 655px;
+            background-image: url("FINAL.jpg");
+        }
+
+        h1 {
+            font-family: cursive;
+
+
+
+        }
+
+        #bg {
+
+            height: 675px;
+            width: 855px;
+            /* background-color:darksalmon; */
+            background-image: url(AQI.jpg);
+            background-position: center center;
+            background-repeat: no-repeat;
+
+
+        }
+    </style>
+</head>
+<body id="bg">
+
+
+    <h1 style="color: rgb(30, 83, 161);">
+        Welcome to TEAM-1 project <b>IOTEDU</b></h1>
+   
+
+    <!-- <img src="AQI.jpg" alt="" srcset=""> -->
+</body>
+
+</html>
+    <meta charset="utf-8" />
+    <script src="jquery-3.1.1.min.js"></script>
+    <script src="knockout-3.4.2.js"></script>
+    <script type="text/javascript">
+        
+
+        $(document).ready(function() {
+
+            var customerViewModel = function() {
+            var self = this;
+            self.AirQualityIndex = ko.observable("");
+            self.ts = ko.observable("");
+            self.time = ko.observable("");
+            self.searchKey = ko.observable("");
+
+            self.getCustomerDetails = function () {              
+                $.ajax({
+                    url: 'https://vzzsnq7olk.execute-api.us-east-2.amazonaws.com/Develop/aqi',
+                    cache: false,
+                    type: 'GET',                   
+                    data: { "time": self.searchKey() },
+                    success: function (data) {              
+                        self.AirQualityIndex(data.Item.AirQualityIndex)
+                        self.ts(data.Item.ts),
+                        self.time(data.Item.time)
+                    }
+                });
+            }
+        }
+
+            var viewModel = new customerViewModel();
+            ko.applyBindings(viewModel);
+         });
+
+       
+    </script>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>Search Key(time):</td>
+            <td><input type="text" id="txtSearchKey" data-bind="value : searchKey"/></td>
+        </tr>
+    </table>
+
+    <br />
+  
+    <table id="AirMonitor">
+        <thead>
+            <tr>
+                <td>AQI:</td>
+                <td><label id="AirQualityIndex" data-bind="text: AirQualityIndex"/></td>
+            </tr>
+
+            <tr>
+                <td>Time Stamp:</td>
+                <td><label id="ts" data-bind="text: ts"/></td>
+            </tr>
+            <tr>
+                <td>Time:</td>
+                <td><label id="time" data-bind="text: time"/></td>
+            </tr>
+          
+        </thead>
+      
+        </table>
+
+    <br />
+  
+  <table>
+<tr>
+    <td><input type="button" value="AQI" data-bind="click: $root.getCustomerDetails()"/></td>
+</tr>
+  </table>
+</body>
+</html>
