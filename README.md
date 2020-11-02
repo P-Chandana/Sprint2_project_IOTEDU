@@ -11,4 +11,11 @@ There have been many incidents like explosions and fire due to certain gases lea
 
 
 ![](ARCHITECTURE.png)
+
+## Future Scope:
+We can add more sensors to get more information about various gas concentrations.
+We can use GSM module to make it cost efficient and easy installation.
+
 ![](future_scope.png)
+
+
